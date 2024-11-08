@@ -1,0 +1,127 @@
+/* Estilos para la barra de navegación */
+.navbar {
+    background-color: #007bff;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Ajuste para contenedores principales */
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo de las categorías */
+.categories-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.categories-list li {
+    background-color: #007bff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.categories-list li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.categories-list li a:hover {
+    color: #ffdd57;
+}
+
+/* Estilo del input de búsqueda */
+.search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Estilo para el contenedor de los productos en cuadrícula */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+/* Estilo para cada tarjeta de producto */
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    max-width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.product-info h2 {
+    font-size: 1.2em;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+.product-info .price {
+    color: #007bff;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.product-info .description {
+    font-size: 0.9em;
+    color: #555;
+}
+
+/* Estilo para la barra de búsqueda */
+.search-bar {
+    width: 100%;
+    max-width: 400px; /* Ajusta el ancho máximo del buscador */
+    padding: 10px;
+    margin-bottom: 20px; /* Espacio entre el buscador y el contenido */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Cambia el borde y sombra cuando el campo está enfocado */
+.search-bar:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}

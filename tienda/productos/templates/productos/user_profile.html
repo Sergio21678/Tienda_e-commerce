@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="{% static 'productos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+
+        /* Estilos de la barra de navegación */
+        .navbar {
+            background-color: #007bff;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .navbar .logo img {
+            width: 35px; /* Tamaño del logo */
+            height: auto;
+            margin-right: 10px;
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .profile-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .profile-container h1 {
+            color: #007bff;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .profile-container p {
+            font-size: 16px;
+            color: #333;
+            margin: 10px 0;
+        }
+        .profile-container a {
+            display: inline-block;
+            margin: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .profile-container a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <a href="{% url 'productos:lista_categorias' %}" class="logo">
+            <img src="{% static 'productos/images/logo.png' %}" alt="24 Horas Logo">
+            <span>24 Horas</span>
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'productos:cart_view' %}"><i class="fas fa-shopping-cart"></i> Carrito</a>
+            <a href="{% url 'productos:user_profile' %}">Ver mi perfil</a>
+            <a href="{% url 'productos:logout' %}">Cerrar sesión</a>
+        </div>
+    </nav>
+    
+    <div class="container profile-container">
+        <h1><i class="fas fa-user-circle"></i> Perfil de Usuario</h1>
+        <p><strong>Nombre de usuario:</strong> {{ username }}</p>
+        <p><strong>Nombre:</strong> {{ first_name }}</p>
+        <p><strong>Apellido:</strong> {{ last_name }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
+        <p><strong>Teléfono:</strong> {{ phone_number }}</p>
+        
+        <a href="{% url 'productos:edit_profile' %}"><i class="fas fa-edit"></i> Editar perfil</a>
+        <a href="{% url 'productos:change_password' %}"><i class="fas fa-key"></i> Cambiar contraseña</a>
+        <a href="{% url 'productos:logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+    </div>
+</body>
+</html>

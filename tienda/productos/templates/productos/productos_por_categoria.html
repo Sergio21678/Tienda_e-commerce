@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos en {{ categoria.nombre }}</title>
+    <link rel="stylesheet" href="{% static 'productos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <style>
+        /* Estilos de la barra de navegación */
+        .navbar {
+            background-color: #007bff;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .navbar .logo img {
+            width: 35px; /* Tamaño del logo */
+            height: auto;
+            margin-right: 10px;
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        
+    </style>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <a href="{% url 'productos:lista_categorias' %}" class="logo">
+            <img src="{% static 'productos/images/logo.png' %}" alt="24 Horas Logo">
+            <span>24 Horas</span>
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'productos:cart_view' %}"><i class="fas fa-shopping-cart"></i> Carrito</a>
+            <a href="{% url 'productos:user_profile' %}">Ver mi perfil</a>
+            <a href="{% url 'productos:logout' %}">Cerrar sesión</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Productos en {{ categoria.nombre }}</h1>
+
+        <!-- Campo de búsqueda -->
+        <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-bar">
+
+        <!-- Contenedor de productos -->
+        <div id="productContainer" class="product-grid">
+            {% for producto in productos %}
+                <div class="product-card">
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="product-image">
+                    <div class="product-info">
+                        <h2 class="product-name">{{ producto.nombre }}</h2>
+                        <p class="price">S/. {{ producto.precio|floatformat:2 }}</p>
+                        <p class="description">{{ producto.descripcion }}</p>
+                        <a href="{% url 'productos:add_to_cart' producto.id %}" class="btn btn-primary">Agregar al Carrito</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No hay productos disponibles.</p>
+            {% endfor %}
+        </div>
+        
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Tu Empresa. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- JavaScript para el buscador en tiempo real -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("searchInput");
+            const productContainer = document.getElementById("productContainer");
+            const allProducts = Array.from(productContainer.children);
+
+            searchInput.addEventListener("input", function () {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+
+                const filteredProducts = allProducts.filter(product => {
+                    const productName = product.querySelector(".product-name").innerText.toLowerCase();
+                    return productName.includes(searchTerm);
+                });
+
+                productContainer.innerHTML = "";
+
+                if (filteredProducts.length > 0) {
+                    filteredProducts.forEach(product => productContainer.appendChild(product));
+                } else {
+                    productContainer.innerHTML = "<p>No hay productos disponibles con ese término.</p>";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

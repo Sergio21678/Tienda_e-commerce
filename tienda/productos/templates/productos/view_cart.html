@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="{% static 'productos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <a href="{% url 'productos:lista_categorias' %}" class="logo">
+            <img src="{% static 'productos/images/logo.png' %}" alt="24 Horas Logo">
+            <span>24 Horas</span>
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'productos:cart_view' %}"><i class="fas fa-shopping-cart"></i> Carrito</a>
+            <a href="{% url 'productos:user_profile' %}">Ver mi perfil</a>
+            <a href="{% url 'productos:logout' %}">Cerrar sesión</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Carrito de Compras</h1>
+        
+        {% if cart_items %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Total</th>
+                        <th>Actualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.producto.nombre }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'productos:update_cart' item.id %}">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                                <button type="submit">Actualizar</button>
+                            </form>
+                        </td>
+                        <td>S/. {{ item.producto.precio }}</td>
+                        <td>S/. {{ item.get_total_price }}</td>
+                        <td>
+                            <a href="{% url 'productos:update_cart' item.id %}?quantity=0" class="btn-remove">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h2>Total: S/. {{ total_price }}</h2>
+            <a href="{% url 'productos:lista_categorias' %}">Seguir Comprando</a>
+        {% else %}
+            <p>Tu carrito está vacío.</p>
+            <a href="{% url 'productos:lista_categorias' %}">Ver productos</a>
+        {% endif %}
+    </div>
+</body>
+</html>

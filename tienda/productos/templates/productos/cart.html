@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="{% static 'productos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .cart-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-item img {
+            width: 50px;
+            height: auto;
+            margin-right: 15px;
+        }
+        .cart-item-details {
+            flex-grow: 1;
+        }
+        .cart-item-title {
+            font-weight: bold;
+            color: #333;
+        }
+        .cart-item-price {
+            color: #007bff;
+        }
+        .cart-total {
+            text-align: right;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .remove-btn {
+            color: #ff0000;
+            cursor: pointer;
+        }
+
+        /* Estilos de la barra de navegación */
+        .navbar {
+            background-color: #007bff;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .navbar .logo img {
+            width: 35px; /* Tamaño del logo */
+            height: auto;
+            margin-right: 10px;
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <a href="{% url 'productos:lista_categorias' %}" class="logo">
+            <img src="{% static 'productos/images/logo.png' %}" alt="24 Horas Logo">
+            <span>24 Horas</span>
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'productos:cart_view' %}"><i class="fas fa-shopping-cart"></i> Carrito</a>
+            <a href="{% url 'productos:user_profile' %}">Ver mi perfil</a>
+            <a href="{% url 'productos:logout' %}">Cerrar sesión</a>
+        </div>
+    </nav>
+
+
+    <div class="cart-container">
+        <h1>Tu Carrito</h1>
+
+        {% for item in cart_items %}
+            <div class="cart-item">
+                <img src="{{ item.producto.imagen.url }}" alt="{{ item.producto.nombre }}">
+                <div class="cart-item-details">
+                    <p class="cart-item-title">{{ item.producto.nombre }}</p>
+                    <p class="cart-item-price">S/. {{ item.producto.precio|floatformat:2 }}</p>
+                    <p>Cantidad: {{ item.quantity }}</p>
+                </div>
+                <a href="{% url 'productos:remove_from_cart' item.id %}" class="remove-btn">Eliminar</a>
+            </div>
+        {% empty %}
+            <p>No tienes productos en tu carrito.</p>
+        {% endfor %}
+
+        <div class="cart-total">
+            Total: S/. {{ total|floatformat:2 }}
+        </div>
+
+        <div style="text-align: right; margin-top: 20px;">
+            <a href="{% url 'productos:checkout' %}" class="btn btn-primary">Proceder al pago</a>
+        </div>
+    </div>
+</body>
+</html>

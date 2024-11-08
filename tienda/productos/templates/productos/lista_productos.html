@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos en {{ categoria.nombre }}</title>
+    <link rel="stylesheet" href="{% static 'productos/css/style.css' %}">
+</head>
+<body>
+
+    <style>
+        /* Estilos de la barra de navegación */
+        .navbar {
+            background-color: #007bff;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .navbar .logo img {
+            width: 35px; /* Tamaño del logo */
+            height: auto;
+            margin-right: 10px;
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+
+    </style>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <a href="{% url 'productos:lista_categorias' %}" class="logo">
+            <img src="{% static 'productos/images/logo.png' %}" alt="24 Horas Logo">
+            <span>24 Horas</span>
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'productos:cart_view' %}"><i class="fas fa-shopping-cart"></i> Carrito</a>
+            <a href="{% url 'productos:user_profile' %}">Ver mi perfil</a>
+            <a href="{% url 'productos:logout' %}">Cerrar sesión</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Productos en {{ categoria.nombre }}</h1>
+        <div class="product-grid">
+            {% for producto in productos %}
+                <div class="product-card">
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="product-image">
+                    <div class="product-info">
+                        <h2>{{ producto.nombre }}</h2>
+                        <p class="price">S/. {{ producto.precio|floatformat:2 }}</p>
+                        <p class="description">{{ producto.descripcion }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No hay productos disponibles en esta categoría.</p>
+            {% endfor %}
+        </div>
+        <p><a href="{% url 'productos:lista_categorias' %}">Volver a categorías</a></p>
+    </div>
+</body>
+</html>
